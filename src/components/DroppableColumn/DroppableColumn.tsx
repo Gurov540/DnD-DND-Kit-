@@ -1,16 +1,19 @@
 import React from "react";
+import { useDroppable } from "@dnd-kit/core";
+
 import styles from "./DroppableColumn.module.css";
 
-export const DroppableColumn: React.FC = () => {
+export function DroppableColumn(props) {
+  const { isOver, setNodeRef } = useDroppable({
+    id: props.id,
+  });
+  const style = {
+    opacity: isOver ? 1 : 0.5,
+  };
+
   return (
-    <>
-      <div className={styles.DropContainer}>
-        <div className={styles.Header}>
-          <h3 className={styles.ColumnName}></h3>
-          <span className={styles.Counter}></span>
-        </div>
-        <div className={styles.Column}></div>
-      </div>
-    </>
+    <div ref={setNodeRef} style={style}>
+      {props.children}
+    </div>
   );
-};
+}
